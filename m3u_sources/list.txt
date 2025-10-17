@@ -8,4 +8,4 @@ https://iptv-org.github.io/iptv/index.m3u
 https://raw.githubusercontent.com/Drewski2423/DrewLive/main/MergedPlaylist.m3u8
 https://raw.githubusercontent.com/Guovin/iptv-api/gd/output/result.m3u
 https://raw.githubusercontent.com/iptv-org/iptv/master/streams/tw.m3u
-https://freetv.fun/test_channels.m3u
+https://freetv.fun/test_channels_all_new.m3u
