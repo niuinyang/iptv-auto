@@ -1,103 +1,101 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
 http://150.138.8.132/PLTV/88888888/224/3221227292/517077885.smil/index.m3u8?fmt=ts2hls
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
 http://192.168.31.2:4022/rtp/239.21.2.170:5002
-#EXTINF:-1 tvg-name="A2 CNN Albania" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/A2CNNAlbania.png" group-title="国际",A2 CNN Albania
+#EXTINF:-1 tvg-name="A2 CNN Albania" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/A2CNNAlbania.png" group-title="国际频道",A2 CNN Albania
 https://tv.a2news.com/live/smil:a2cnnweb.stream.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="ACNN (480p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ACNN480p.png" group-title="国际",ACNN (480p)
+#EXTINF:-1 tvg-name="ACNN (480p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ACNN480p.png" group-title="国际频道",ACNN (480p)
 https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_014/Stream/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC AMERICA" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAMERICA.png" group-title="国际",BBC AMERICA
+#EXTINF:-1 tvg-name="BBC AMERICA" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAMERICA.png" group-title="国际频道",BBC AMERICA
 https://fl51.moveonjoy.com/BBC_AMERICA/index.m3u8
-#EXTINF:-1 tvg-name="BBC America" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAmerica.png" group-title="国际",BBC America
+#EXTINF:-1 tvg-name="BBC America" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAmerica.png" group-title="国际频道",BBC America
 https://bcovlive-a.akamaihd.net/7f5ec16d102f4b5d92e8e27bc95ff424/us-east-1/6240731308001/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Comedy" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCComedy.png" group-title="国际",BBC Comedy
+#EXTINF:-1 tvg-name="BBC Comedy" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCComedy.png" group-title="国际频道",BBC Comedy
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-65622fb65dbccec83a87b643.m3u8
-#EXTINF:-1 tvg-name="BBC Drama Italy (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCDramaItaly1080p.png" group-title="国际",BBC Drama Italy (1080p)
+#EXTINF:-1 tvg-name="BBC Drama Italy (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCDramaItaly1080p.png" group-title="国际频道",BBC Drama Italy (1080p)
 https://amg00793-amg00793c41-rakuten-it-5445.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth.png" group-title="国际",BBC Earth
+#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth.png" group-title="国际频道",BBC Earth
 https://jmp2.uk/plex-5e20b730f2f8d5003d739db7-6414a73254c537d12d8073d7.m3u8
-#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth.png" group-title="国际",BBC Earth
+#EXTINF:-1 tvg-name="BBC Earth" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth.png" group-title="国际频道",BBC Earth
 https://jmp2.uk/plu-656535fc2c46f30008870fae.m3u8
-#EXTINF:-1 tvg-name="BBC Earth (1080p) [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth1080pGeo-blocked.png" group-title="国际",BBC Earth (1080p) [Geo-blocked]
+#EXTINF:-1 tvg-name="BBC Earth (1080p) [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCEarth1080pGeo-blocked.png" group-title="国际频道",BBC Earth (1080p) [Geo-blocked]
 https://amg00793-amg00793c6-firetv-us-4067.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Food" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFood.png" group-title="国际",BBC Food
+#EXTINF:-1 tvg-name="BBC Food" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFood.png" group-title="国际频道",BBC Food
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-630905af0417b7074a4ad95e.m3u8
-#EXTINF:-1 tvg-name="BBC Food" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFood.png" group-title="国际",BBC Food
+#EXTINF:-1 tvg-name="BBC Food" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFood.png" group-title="国际频道",BBC Food
 https://jmp2.uk/plex-5e20b730f2f8d5003d739db7-630905af0417b7074a4ad95e.m3u8
-#EXTINF:-1 tvg-name="BBC Four/CBeebies (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFourCBeebies1080p.png" group-title="国际",BBC Four/CBeebies (1080p)
+#EXTINF:-1 tvg-name="BBC Four/CBeebies (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCFourCBeebies1080p.png" group-title="国际频道",BBC Four/CBeebies (1080p)
 https://viamotionhsi.netplus.ch/live/eds/bbc4cbeebies/browser-HLS8/bbc4cbeebies.m3u8
-#EXTINF:-1 tvg-name="BBC Game Shows" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCGameShows.png" group-title="国际",BBC Game Shows
+#EXTINF:-1 tvg-name="BBC Game Shows" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCGameShows.png" group-title="国际频道",BBC Game Shows
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-656229e4b7d737841f30a4fb.m3u8
-#EXTINF:-1 tvg-name="BBC Home & Garden" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCHomeGarden.png" group-title="国际",BBC Home & Garden
+#EXTINF:-1 tvg-name="BBC Home & Garden" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCHomeGarden.png" group-title="国际频道",BBC Home & Garden
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-6308eda9ac9983739c8a29bb.m3u8
-#EXTINF:-1 tvg-name="BBC Impossible" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCImpossible.png" group-title="国际",BBC Impossible
+#EXTINF:-1 tvg-name="BBC Impossible" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCImpossible.png" group-title="国际频道",BBC Impossible
 https://bbc-impossible-1-us.xumo.wurl.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC News" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNews.png" group-title="国际",BBC News
+#EXTINF:-1 tvg-name="BBC News" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNews.png" group-title="国际频道",BBC News
 https://jmp2.uk/plu-65d92a8c8b24c80008e285c0.m3u8
-#EXTINF:-1 tvg-name="BBC News (North America) (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsNorthAmerica1080p.png" group-title="国际",BBC News (North America) (1080p)
+#EXTINF:-1 tvg-name="BBC News (North America) (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsNorthAmerica1080p.png" group-title="国际频道",BBC News (North America) (1080p)
 https://d2vnbkvjbims7j.cloudfront.net/containerA/LTN/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC News Asia Pacific (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsAsiaPacific1080p.png" group-title="国际",BBC News Asia Pacific (1080p)
+#EXTINF:-1 tvg-name="BBC News Asia Pacific (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsAsiaPacific1080p.png" group-title="国际频道",BBC News Asia Pacific (1080p)
 https://cdn4.skygo.mn/live/disk1/BBC_News/HLSv3-FTA/BBC_News.m3u8
-#EXTINF:-1 tvg-name="BBC News Europe" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsEurope.png" group-title="国际",BBC News Europe
+#EXTINF:-1 tvg-name="BBC News Europe" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCNewsEurope.png" group-title="国际频道",BBC News Europe
 https://viamotionhsi.netplus.ch/live/eds/bbcworld/browser-HLS8/bbcworld.m3u8
-#EXTINF:-1 tvg-name="BBC Sci-Fi" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCSci-Fi.png" group-title="国际",BBC Sci-Fi
+#EXTINF:-1 tvg-name="BBC Sci-Fi" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCSci-Fi.png" group-title="国际频道",BBC Sci-Fi
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-65622ac05dbccec83a87b641.m3u8
-#EXTINF:-1 tvg-name="BBC Silent Witness New Tricks (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCSilentWitnessNewTricks720p.png" group-title="国际",BBC Silent Witness New Tricks (720p)
+#EXTINF:-1 tvg-name="BBC Silent Witness New Tricks (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCSilentWitnessNewTricks720p.png" group-title="国际频道",BBC Silent Witness New Tricks (720p)
 https://aegis-cloudfront-1.tubi.video/d37465d7-dfbc-45cd-98a2-8d47968b5fb5/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Three/CBBC (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCThreeCBBC1080p.png" group-title="国际",BBC Three/CBBC (1080p)
+#EXTINF:-1 tvg-name="BBC Three/CBBC (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCThreeCBBC1080p.png" group-title="国际频道",BBC Three/CBBC (1080p)
 https://viamotionhsi.netplus.ch/live/eds/bbc3cbbc/browser-HLS8/bbc3cbbc.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear.png" group-title="国际",BBC Top Gear
+#EXTINF:-1 tvg-name="BBC Top Gear" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear.png" group-title="国际频道",BBC Top Gear
 https://amg00793-amg00793c5-xumo-us-2664.playouts.now.amagi.tv/bbcstudios-bbctopgear8min-all/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear (1080p) [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear1080pGeo-blocked.png" group-title="国际",BBC Top Gear (1080p) [Geo-blocked]
+#EXTINF:-1 tvg-name="BBC Top Gear (1080p) [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear1080pGeo-blocked.png" group-title="国际频道",BBC Top Gear (1080p) [Geo-blocked]
 https://amg00793-amg00793c5-firetv-us-4068.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear720p.png" group-title="国际",BBC Top Gear (720p)
+#EXTINF:-1 tvg-name="BBC Top Gear (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGear720p.png" group-title="国际频道",BBC Top Gear (720p)
 https://livetv-fa.tubi.video/bbc-top-gear2/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear Finland (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearFinland1080p.png" group-title="国际",BBC Top Gear Finland (1080p)
+#EXTINF:-1 tvg-name="BBC Top Gear Finland (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearFinland1080p.png" group-title="国际频道",BBC Top Gear Finland (1080p)
 https://amg00793-amg00793c49-rakuten-fi-5848.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear France (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearFrance1080p.png" group-title="国际",BBC Top Gear France (1080p)
+#EXTINF:-1 tvg-name="BBC Top Gear France (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearFrance1080p.png" group-title="国际频道",BBC Top Gear France (1080p)
 https://amg00793-amg00793c45-rakuten-fr-5539.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear Germany (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearGermany1080p.png" group-title="国际",BBC Top Gear Germany (1080p)
+#EXTINF:-1 tvg-name="BBC Top Gear Germany (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearGermany1080p.png" group-title="国际频道",BBC Top Gear Germany (1080p)
 https://amg00793-amg00793c44-rakuten-de-5538.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Top Gear Italy (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearItaly1080p.png" group-title="国际",BBC Top Gear Italy (1080p)
+#EXTINF:-1 tvg-name="BBC Top Gear Italy (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTopGearItaly1080p.png" group-title="国际频道",BBC Top Gear Italy (1080p)
 https://amg00793-amg00793c43-rakuten-it-5537.playouts.now.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="BBC Travel" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTravel.png" group-title="国际",BBC Travel
+#EXTINF:-1 tvg-name="BBC Travel" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTravel.png" group-title="国际频道",BBC Travel
 https://jmp2.uk/plex-647f8d22a2fc3fadb4721685-65622eddb7d737841f30a4fd.m3u8
-#EXTINF:-1 tvg-name="BBC Two (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTwo1080p.png" group-title="国际",BBC Two (1080p)
+#EXTINF:-1 tvg-name="BBC Two HD (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCTwoHD1080p.png" group-title="国际频道",BBC Two HD (1080p)
 https://viamotionhsi.netplus.ch/live/eds/bbc2/browser-HLS8/bbc2.m3u8
-#EXTINF:-1 tvg-name="BBC WORLD NEWS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCWORLDNEWS.png" group-title="国际",BBC WORLD NEWS
+#EXTINF:-1 tvg-name="BBC WORLD NEWS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCWORLDNEWS.png" group-title="国际频道",BBC WORLD NEWS
 https://fl51.moveonjoy.com/BBC_WORLD_NEWS/index.m3u8
-#EXTINF:-1 tvg-name="BBC World Service" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCWorldService.png" group-title="国际",BBC World Service
+#EXTINF:-1 tvg-name="BBC World Service" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCWorldService.png" group-title="国际频道",BBC World Service
 http://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/hls/nonuk/sbr_low/ak/bbc_world_service.m3u8
-#EXTINF:-1 tvg-name="CNN" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNN.png" group-title="国际",CNN
+#EXTINF:-1 tvg-name="CNN" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNN.png" group-title="国际频道",CNN
 https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_3_1464000.m3u8
-#EXTINF:-1 tvg-name="CNN Headlines" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNHeadlines.png" group-title="国际",CNN Headlines
+#EXTINF:-1 tvg-name="CNN Headlines" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNHeadlines.png" group-title="国际频道",CNN Headlines
 https://jmp2.uk/plu-66c45c274f25dd00092739ee.m3u8
-#EXTINF:-1 tvg-name="CNN Headlines" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNHeadlines.png" group-title="国际",CNN Headlines
+#EXTINF:-1 tvg-name="CNN Headlines" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNHeadlines.png" group-title="国际频道",CNN Headlines
 https://jmp2.uk/plu-66dff9d46ad04d0008fda4de.m3u8
-#EXTINF:-1 tvg-name="CNN INTERNATIONAL" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNINTERNATIONAL.png" group-title="国际",CNN INTERNATIONAL
+#EXTINF:-1 tvg-name="CNN INTERNATIONAL" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNINTERNATIONAL.png" group-title="国际频道",CNN INTERNATIONAL
 https://fl51.moveonjoy.com/CNN_INTERNATIONAL/index.m3u8
-#EXTINF:-1 tvg-name="CNN Indonesia" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNIndonesia.png" group-title="国际",CNN Indonesia
+#EXTINF:-1 tvg-name="CNN Indonesia" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNIndonesia.png" group-title="国际频道",CNN Indonesia
 http://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8
-#EXTINF:-1 tvg-name="CNN International" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNInternational.png" group-title="国际",CNN International
+#EXTINF:-1 tvg-name="CNN International" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNInternational.png" group-title="国际频道",CNN International
 https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_0_3564000.m3u8
-#EXTINF:-1 tvg-name="CNN Originals" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNOriginals.png" group-title="国际",CNN Originals
+#EXTINF:-1 tvg-name="CNN Originals" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNOriginals.png" group-title="国际频道",CNN Originals
 https://jmp2.uk/plu-66e0b4536ad04d0008fff4b2.m3u8
-#EXTINF:-1 tvg-name="CNN XPRESS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNXPRESS.png" group-title="国际",CNN XPRESS
+#EXTINF:-1 tvg-name="CNN XPRESS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNXPRESS.png" group-title="国际频道",CNN XPRESS
 https://jmp2.uk/plu-673248f9030a2c0008033af8.m3u8
-#EXTINF:-1 tvg-name="CNNi" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNi.png" group-title="国际",CNNi
+#EXTINF:-1 tvg-name="CNNi" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNi.png" group-title="国际频道",CNNi
 https://jmp2.uk/plu-66c45afaa72e7b0008a2b153.m3u8
-#EXTINF:-1 tvg-name="NHK BS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS.png" group-title="国际",NHK BS
+#EXTINF:-1 tvg-name="NHK BS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS.png" group-title="国际频道",NHK BS
 https://mt01.utako.moe/NHK_BS/index.m3u8
-#EXTINF:-1 tvg-name="NHK BS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS.png" group-title="国际",NHK BS
-https://mt01.utako.moe/bsp4k/index.m3u8
-#EXTINF:-1 tvg-name="NHK E" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKE.png" group-title="国际",NHK E
+#EXTINF:-1 tvg-name="NHK E" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKE.png" group-title="国际频道",NHK E
 https://mt01.utako.moe/NHK_E/index.m3u8
-#EXTINF:-1 tvg-name="NHK G" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKG.png" group-title="国际",NHK G
+#EXTINF:-1 tvg-name="NHK G" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKG.png" group-title="国际频道",NHK G
 https://mt01.utako.moe/NHK_G/index.m3u8
-#EXTINF:-1 tvg-name="NHK Kishou Saigai (360p) [Not 24/7]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKKishouSaigai360pNot247.png" group-title="国际",NHK Kishou Saigai (360p) [Not 24/7]
+#EXTINF:-1 tvg-name="NHK Kishou Saigai (360p) [Not 24/7]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKKishouSaigai360pNot247.png" group-title="国际频道",NHK Kishou Saigai (360p) [Not 24/7]
 https://newssimul-stream.nhk.jp/hls/live/2010561/nhknewssimul/master.m3u8
-#EXTINF:-1 tvg-name="NHK WORLD JAPAN" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWORLDJAPAN.png" group-title="国际",NHK WORLD JAPAN
+#EXTINF:-1 tvg-name="NHK WORLD JAPAN" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWORLDJAPAN.png" group-title="国际频道",NHK WORLD JAPAN
 https://master.nhkworld.jp/nhkworld-tv/playlist/live.m3u8
-#EXTINF:-1 tvg-name="NHK World-Japan (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWorld-Japan1080p.png" group-title="国际",NHK World-Japan (1080p)
+#EXTINF:-1 tvg-name="NHK World-Japan (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWorld-Japan1080p.png" group-title="国际频道",NHK World-Japan (1080p)
 https://livehub-voidnet.onrender.com/cluster/streamcore/jp/NHK_StreamOrchestrator.m3u8
