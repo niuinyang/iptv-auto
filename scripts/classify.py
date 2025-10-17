@@ -15,21 +15,26 @@ new_gateway = "192.168.31.2"
 new_port = "4022"
 custom_file = os.path.join("custom_m3u","Telecom-Shandong-Multicast-local.m3u")
 
-r = requests.get(custom_url)
-if r.status_code != 200:
-    raise Exception(f"下载失败，状态码 {r.status_code}")
+try:
+    r = requests.get(custom_url, timeout=10)
+    r.raise_for_status()
+    lines = r.text.splitlines()
+except Exception as e:
+    raise Exception(f"下载自备组播源失败: {e}")
 
-lines = r.text.splitlines()
+custom_pairs = []
 new_lines = []
-
 for line in lines:
     if line.startswith("http://"):
         new_line = re.sub(r"http://[\d\.]+:\d+(/rtp/.*)", f"http://{new_gateway}:{new_port}\\1", line)
         new_lines.append(new_line)
     else:
         new_lines.append(line)
+for i in range(0,len(new_lines)-1):
+    if new_lines[i].startswith("#EXTINF"):
+        custom_pairs.append( (new_lines[i], new_lines[i+1], True) )  # True 表示自备源
 
-with open(custom_file, "w", encoding="utf-8") as f:
+with open(custom_file,"w",encoding="utf-8",errors="ignore") as f:
     f.write("\n".join(new_lines))
 
 # ------------------- 分类关键字 -------------------
@@ -67,26 +72,27 @@ GITHUB_API_URL = "https://api.github.com/repos/fanmingming/live/contents/logo"
 
 def get_logo_files():
     try:
-        r = requests.get(GITHUB_API_URL)
-        if r.status_code == 200:
-            data = r.json()
-            files = [file['name'] for file in data if file['type'] == 'file']
-            return files
-        else:
-            print(f"获取 logo 文件失败，状态码：{r.status_code}")
-            return []
+        r = requests.get(GITHUB_API_URL, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        return [file['name'] for file in data if file['type']=='file']
     except Exception as e:
         print("获取 logo 文件异常:", e)
         return []
 
 logo_files = get_logo_files()
+logo_cache = {}
 
-def find_logo(title_std):
+def find_logo_cached(title_std):
+    if title_std in logo_cache:
+        return logo_cache[title_std]
     title_lower = title_std.lower()
     for logo in logo_files:
         name_part = os.path.splitext(logo)[0].lower()
-        if name_part in title_lower or title_lower in name_part:
-            return BASE_LOGO_URL + logo
+        if name_part == title_lower or name_part in title_lower or title_lower in name_part:
+            logo_cache[title_std] = BASE_LOGO_URL + logo
+            return logo_cache[title_std]
+    logo_cache[title_std] = ""
     return ""
 
 # ------------------- 初始化 channel_map -------------------
@@ -97,32 +103,30 @@ channel_map["其他"] = defaultdict(list)
 all_pairs = []
 if os.path.exists(input_file):
     data = open(input_file, encoding="utf-8").read().splitlines()
-    pairs = [(data[i], data[i+1]) for i in range(0,len(data)-1) if data[i].startswith("#EXTINF")]
-    all_pairs.extend(pairs)
+    for i in range(0,len(data)-1):
+        if data[i].startswith("#EXTINF"):
+            all_pairs.append( (data[i], data[i+1], False) )  # False 表示非自备源
 
-# ------------------- 读取自备组播源 -------------------
-if os.path.exists(custom_file):
-    custom_data = open(custom_file, encoding="utf-8").read().splitlines()
-    custom_pairs = [(custom_data[i], custom_data[i+1]) for i in range(0,len(custom_data)-1) if custom_data[i].startswith("#EXTINF")]
-    all_pairs.extend(custom_pairs)
+# ------------------- 合并自备源 -------------------
+all_pairs.extend(custom_pairs)
 
 # ------------------- 分类 + 名称统一 + 台标 + 自备源优先 -------------------
-for title, url in all_pairs:
+for title,url,is_custom in all_pairs:
     title_clean = title.replace(" 高清","").replace(" HD","").replace(" 标清","")
     title_std = name_map.get(title_clean, title_clean)
-    
+
     added = False
     for cat,kws in categories.items():
         if any(kw.lower() in title_std.lower() for kw in kws):
-            if "custom_m3u" in url or url.startswith(f"http://{new_gateway}:{new_port}"):
-                channel_map[cat][title_std].insert(0, url)  # 自备源插入开头
+            if is_custom:
+                channel_map[cat][title_std].insert(0,url)
             else:
                 channel_map[cat][title_std].append(url)
             added = True
             break
     if not added:
-        if "custom_m3u" in url or url.startswith(f"http://{new_gateway}:{new_port}"):
-            channel_map["其他"][title_std].insert(0, url)
+        if is_custom:
+            channel_map["其他"][title_std].insert(0,url)
         else:
             channel_map["其他"][title_std].append(url)
 
@@ -144,23 +148,23 @@ for cat in category_order:
     if cat == "央视":
         sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
     elif cat == "地方":
-        sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: next((i for i,v in enumerate(province_order) if v in x), 999))
+        sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: (next((i for i,v in enumerate(province_order) if v in x), 999), x))
     else:
         sorted_channels = sorted(channel_map[cat].keys())
 
     # 输出每个频道的所有源
-    for ch in sorted_channels:
-        logo = find_logo(ch)
-        for url in channel_map[cat][ch]:
-            summary_content.append(f'#EXTINF:-1 tvg-logo="{logo}",{ch}')
-            summary_content.append(url)
-
-    # 写分类文件
-    with open(os.path.join(output_dir,f"{cat}.m3u"),"w", encoding="utf-8") as f:
-        f.write("\n".join(["#EXTM3U"] + [line for ch in sorted_channels for url in channel_map[cat][ch] for line in [f'#EXTINF:-1 tvg-logo="{find_logo(ch)}",{ch}', url]]))
+    with open(os.path.join(output_dir,f"{cat}.m3u"),"w",encoding="utf-8",errors="ignore") as f:
+        f.write("#EXTM3U\n")
+        for ch in sorted_channels:
+            logo = find_logo_cached(ch)
+            for url in channel_map[cat][ch]:
+                f.write(f'#EXTINF:-1 tvg-logo="{logo}",{ch}\n')
+                f.write(f'{url}\n')
+                summary_content.append(f'#EXTINF:-1 tvg-logo="{logo}",{ch}')
+                summary_content.append(url)
 
 # ------------------- 写汇总文件 -------------------
-with open(os.path.join(output_dir,"summary.m3u"),"w", encoding="utf-8") as f:
+with open(os.path.join(output_dir,"summary.m3u"),"w", encoding="utf-8",errors="ignore") as f:
     f.write("\n".join(summary_content))
 
 print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
