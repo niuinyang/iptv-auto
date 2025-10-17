@@ -185,4 +185,4 @@ for cat in category_order:
 with open(os.path.join(output_dir, "summary.m3u"), "w", encoding="utf-8", errors="ignore") as f:
     f.write("\n".join(summary_content))
 
-print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。
+print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
