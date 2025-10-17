@@ -16,7 +16,6 @@ new_gateway = "192.168.31.2"
 new_port = "4022"
 custom_multicast_file = os.path.join("custom_m3u", "Telecom-Shandong-Multicast-local.m3u")
 
-# 下载自备组播源
 try:
     r = requests.get(custom_multicast_url, timeout=10)
     r.raise_for_status()
@@ -32,7 +31,6 @@ for line in lines_multicast:
         new_lines.append(new_line)
     else:
         new_lines.append(line)
-
 for i in range(0, len(new_lines)-1):
     if new_lines[i].startswith("#EXTINF"):
         custom_multicast_pairs.append((new_lines[i], new_lines[i+1], True))  # True 表示自备源
@@ -40,7 +38,7 @@ for i in range(0, len(new_lines)-1):
 with open(custom_multicast_file, "w", encoding="utf-8", errors="ignore") as f:
     f.write("\n".join(new_lines))
 
-# 下载自备 HTTP 源
+# ------------------- 自备 HTTP 源 -------------------
 try:
     r = requests.get(custom_http_url, timeout=10)
     r.raise_for_status()
@@ -83,34 +81,19 @@ name_map = {
     "CCTV-15":"CCTV-15音乐","央视音乐":"CCTV-15音乐",
 }
 
-# ------------------- 获取远程台标 -------------------
-BASE_LOGO_URL = "https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/"
-GITHUB_API_URL = "https://api.github.com/repos/fanmingming/live/contents/logo"
+# ------------------- 台标 -------------------
+BASE_LOGO_URL = "https://raw.githubusercontent.com/fanmingming/live/main/tv/"
+logo_mapping = {
+    "CCTV-1综合":"CCTV1.png","CCTV-2财经":"CCTV2.png","CCTV-3娱乐":"CCTV3.png",
+    "CCTV-4中文国际":"CCTV4.png","CCTV-5体育":"CCTV5.png","CCTV-6电影":"CCTV6.png",
+    "CCTV-7国防军事":"CCTV7.png","CCTV-8电视剧":"CCTV8.png","CCTV-9纪录":"CCTV9.png",
+    "CCTV-10科教":"CCTV10.png","CCTV-11戏曲":"CCTV11.png","CCTV-12社会与法":"CCTV12.png",
+    "CCTV-13新闻":"CCTV13.png","CCTV-14少儿":"CCTV14.png","CCTV-15音乐":"CCTV15.png",
+}
 
-def get_logo_files():
-    try:
-        r = requests.get(GITHUB_API_URL, timeout=10)
-        r.raise_for_status()
-        data = r.json()
-        return [file['name'] for file in data if file['type']=='file']
-    except Exception as e:
-        print("获取 logo 文件异常:", e)
-        return []
-
-logo_files = get_logo_files()
-logo_cache = {}
-
-def find_logo_cached(title_std):
-    if title_std in logo_cache:
-        return logo_cache[title_std]
-    title_lower = title_std.lower()
-    for logo in logo_files:
-        name_part = os.path.splitext(logo)[0].lower()
-        if name_part == title_lower or name_part in title_lower or title_lower in name_part:
-            logo_cache[title_std] = BASE_LOGO_URL + logo
-            return logo_cache[title_std]
-    logo_cache[title_std] = ""
-    return ""
+def find_logo(title_std):
+    fname = logo_mapping.get(title_std, "")
+    return BASE_LOGO_URL + fname if fname else ""
 
 # ------------------- 初始化 channel_map -------------------
 channel_map = {cat: defaultdict(list) for cat in categories}
@@ -128,11 +111,11 @@ if os.path.exists(input_file):
 all_pairs.extend(custom_multicast_pairs)
 all_pairs.extend(custom_http_pairs)
 
-# ------------------- 分类 + 名称统一 + 台标 + 自备源优先 -------------------
+# ------------------- 分类 + 名称统一 + 台标 + 自备源置顶 -------------------
 for title, url, is_custom in all_pairs:
     title_clean = title.replace(" 高清","").replace(" HD","").replace(" 标清","")
     title_std = name_map.get(title_clean, title_clean)
-    
+
     added = False
     for cat, kws in categories.items():
         if any(kw.lower() in title_std.lower() for kw in kws):
@@ -148,7 +131,7 @@ for title, url, is_custom in all_pairs:
         else:
             channel_map["其他"][title_std].append(url)
 
-# ------------------- 内部排序 -------------------
+# ------------------- 内部排序 & 输出 M3U -------------------
 cctv_order = ["CCTV-1综合","CCTV-2财经","CCTV-3娱乐","CCTV-4中文国际",
               "CCTV-5体育","CCTV-6电影","CCTV-7国防军事","CCTV-8电视剧",
               "CCTV-9纪录","CCTV-10科教","CCTV-11戏曲","CCTV-12社会与法",
@@ -170,23 +153,19 @@ for cat in category_order:
     else:
         sorted_channels = sorted(channel_map[cat].keys())
 
-    file_path = os.path.join(output_dir, f"{cat}.m3u")
-    with open(file_path, "w", encoding="utf-8", errors="ignore") as f:
+    # 输出分类 M3U 文件
+    with open(os.path.join(output_dir, f"{cat}.m3u"), "w", encoding="utf-8", errors="ignore") as f:
         f.write("#EXTM3U\n")
-        for title_std in sorted_channels:
-            logo = find_logo_cached(title_std)
-            urls = channel_map[cat][title_std]
-            # 自备源置顶
-            urls_sorted = [u for u in urls if 'custom_m3u' in u or u.startswith(f"http://{new_gateway}:{new_port}")] + \
-                          [u for u in urls if u not in urls[:0]]
-            for url in urls_sorted:
-                f.write(f'#EXTINF:-1 group-title="{cat}" tvg-logo="{logo}",{title_std}\n')
-                f.write(f"{url}\n")
-                summary_content.append(f'#EXTINF:-1 group-title="{cat}" tvg-logo="{logo}",{title_std}')
+        for ch in sorted_channels:
+            logo = find_logo(ch)
+            for url in channel_map[cat][ch]:
+                f.write(f'#EXTINF:-1 tvg-id="" tvg-name="{ch}" tvg-logo="{logo}" group-title="{cat}",{ch}\n')
+                f.write(f'{url}\n')
+                summary_content.append(f'#EXTINF:-1 tvg-id="" tvg-name="{ch}" tvg-logo="{logo}" group-title="{cat}",{ch}')
                 summary_content.append(url)
 
-# ------------------- 写汇总文件 -------------------
-with open(os.path.join(output_dir,"summary.m3u"), "w", encoding="utf-8", errors="ignore") as f:
+# ------------------- 汇总文件 -------------------
+with open(os.path.join(output_dir, "summary.m3u"), "w", encoding="utf-8", errors="ignore") as f:
     f.write("\n".join(summary_content))
 
 print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、汇总文件生成。")
