@@ -4,8 +4,9 @@ import re
 from collections import defaultdict
 
 # ------------------- 输入输出文件 -------------------
-input_file = "output/working.m3u"         # 可播源
-custom_url = "https://raw.githubusercontent.com/sumingyd/Telecom-Shandong-IPTV-List/refs/heads/main/Telecom-Shandong-Multicast.m3u"
+input_file = "output/working.m3u"  # 可播源
+custom_multicast_url = "https://raw.githubusercontent.com/sumingyd/Telecom-Shandong-IPTV-List/refs/heads/main/Telecom-Shandong-Multicast.m3u"
+custom_http_url = "https://raw.githubusercontent.com/sumingyd/Telecom-Shandong-IPTV-List/refs/heads/main/Telecom-Shandong.m3u"
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
 os.makedirs("custom_m3u", exist_ok=True)
@@ -13,29 +14,43 @@ os.makedirs("custom_m3u", exist_ok=True)
 # ------------------- 自备组播源替换网关 -------------------
 new_gateway = "192.168.31.2"
 new_port = "4022"
-custom_file = os.path.join("custom_m3u","Telecom-Shandong-Multicast-local.m3u")
+custom_multicast_file = os.path.join("custom_m3u", "Telecom-Shandong-Multicast-local.m3u")
 
 try:
-    r = requests.get(custom_url, timeout=10)
+    r = requests.get(custom_multicast_url, timeout=10)
     r.raise_for_status()
-    lines = r.text.splitlines()
+    lines_multicast = r.text.splitlines()
 except Exception as e:
     raise Exception(f"下载自备组播源失败: {e}")
 
-custom_pairs = []
+custom_multicast_pairs = []
 new_lines = []
-for line in lines:
+for line in lines_multicast:
     if line.startswith("http://"):
         new_line = re.sub(r"http://[\d\.]+:\d+(/rtp/.*)", f"http://{new_gateway}:{new_port}\\1", line)
         new_lines.append(new_line)
     else:
         new_lines.append(line)
-for i in range(0,len(new_lines)-1):
+for i in range(0, len(new_lines)-1):
     if new_lines[i].startswith("#EXTINF"):
-        custom_pairs.append( (new_lines[i], new_lines[i+1], True) )  # True 表示自备源
+        custom_multicast_pairs.append((new_lines[i], new_lines[i+1], True))  # True 表示自备源
 
-with open(custom_file,"w",encoding="utf-8",errors="ignore") as f:
+with open(custom_multicast_file, "w", encoding="utf-8", errors="ignore") as f:
     f.write("\n".join(new_lines))
+
+# ------------------- 自备 HTTP 源 -------------------
+try:
+    r = requests.get(custom_http_url, timeout=10)
+    r.raise_for_status()
+    lines_http = r.text.splitlines()
+except Exception as e:
+    print(f"⚠️ 下载自备 HTTP 源失败: {e}")
+    lines_http = []
+
+custom_http_pairs = []
+for i in range(0, len(lines_http)-1):
+    if lines_http[i].startswith("#EXTINF"):
+        custom_http_pairs.append((lines_http[i], lines_http[i+1], True))
 
 # ------------------- 分类关键字 -------------------
 categories = {
@@ -103,30 +118,32 @@ channel_map["其他"] = defaultdict(list)
 all_pairs = []
 if os.path.exists(input_file):
     data = open(input_file, encoding="utf-8").read().splitlines()
-    for i in range(0,len(data)-1):
+    for i in range(0, len(data)-1):
         if data[i].startswith("#EXTINF"):
-            all_pairs.append( (data[i], data[i+1], False) )  # False 表示非自备源
+            all_pairs.append((data[i], data[i+1], False))  # False 表示非自备源
 
 # ------------------- 合并自备源 -------------------
-all_pairs.extend(custom_pairs)
+# 顺序：可播源 → 自备组播源 → 自备 HTTP 源
+all_pairs.extend(custom_multicast_pairs)
+all_pairs.extend(custom_http_pairs)
 
 # ------------------- 分类 + 名称统一 + 台标 + 自备源优先 -------------------
-for title,url,is_custom in all_pairs:
+for title, url, is_custom in all_pairs:
     title_clean = title.replace(" 高清","").replace(" HD","").replace(" 标清","")
     title_std = name_map.get(title_clean, title_clean)
 
     added = False
-    for cat,kws in categories.items():
+    for cat, kws in categories.items():
         if any(kw.lower() in title_std.lower() for kw in kws):
             if is_custom:
-                channel_map[cat][title_std].insert(0,url)
+                channel_map[cat][title_std].insert(0, url)
             else:
                 channel_map[cat][title_std].append(url)
             added = True
             break
     if not added:
         if is_custom:
-            channel_map["其他"][title_std].insert(0,url)
+            channel_map["其他"][title_std].insert(0, url)
         else:
             channel_map["其他"][title_std].append(url)
 
@@ -152,19 +169,5 @@ for cat in category_order:
     else:
         sorted_channels = sorted(channel_map[cat].keys())
 
-    # 输出每个频道的所有源
-    with open(os.path.join(output_dir,f"{cat}.m3u"),"w",encoding="utf-8",errors="ignore") as f:
-        f.write("#EXTM3U\n")
-        for ch in sorted_channels:
-            logo = find_logo_cached(ch)
-            for url in channel_map[cat][ch]:
-                f.write(f'#EXTINF:-1 tvg-logo="{logo}",{ch}\n')
-                f.write(f'{url}\n')
-                summary_content.append(f'#EXTINF:-1 tvg-logo="{logo}",{ch}')
-                summary_content.append(url)
-
-# ------------------- 写汇总文件 -------------------
-with open(os.path.join(output_dir,"summary.m3u"),"w", encoding="utf-8",errors="ignore") as f:
-    f.write("\n".join(summary_content))
-
-print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
+    # 输出每个分类的 M3U 文件
+    with open(os.path.join(output_dir, f"{cat}.m
