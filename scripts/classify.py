@@ -129,6 +129,8 @@ unmapped = set()
 
 def smart_name_map(title):
     t = title.strip()
+    if not t:
+        return "unknown"
     if t in name_map:
         return name_map[t]
     if t in auto_name_map_dict:
@@ -146,7 +148,7 @@ def smart_name_map(title):
                 "9":"CCTV-9纪录","10":"CCTV-10科教","11":"CCTV-11戏曲","12":"CCTV-12社会与法",
                 "13":"CCTV-13新闻","14":"CCTV-14少儿","15":"CCTV-15音乐"
             }
-            return mapping.get(num)
+            return mapping.get(num, t)
 
     t_upper = t_clean.upper()
     for std_name, aliases in province_channels.items():
@@ -155,9 +157,11 @@ def smart_name_map(title):
             if a_clean in t_upper:
                 return std_name
 
-    # 未匹配，记录
     unmapped.add(t)
-    return normalize_spaces(remove_symbols_and_emoji(remove_control_chars(t)))
+    result = normalize_spaces(remove_symbols_and_emoji(remove_control_chars(t)))
+    if not result:
+        result = "unknown"
+    return result
 
 # ------------------- 合并所有源 -------------------
 lines = open(input_file, encoding="utf-8").read().splitlines() if os.path.exists(input_file) else []
@@ -171,6 +175,7 @@ custom_channels = set()
 
 for title, url, is_custom in merged:
     std_name = smart_name_map(title)
+    std_name = std_name or "unknown"
     is_4k = bool(re.search(r'4K', title, re.I))
     if is_4k:
         cat = "4K频道"
@@ -179,7 +184,7 @@ for title, url, is_custom in merged:
         for c, kws in categories.items():
             if c == "4K频道":
                 continue
-            if any(kw.lower() in std_name.lower() for kw in kws):
+            if any(kw.lower() in (std_name or "").lower() for kw in kws):
                 cat = c
                 break
 
