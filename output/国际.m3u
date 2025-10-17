@@ -1,10 +1,12 @@
 #EXTM3U
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
+http://150.138.8.132/PLTV/88888888/224/3221227292/517077885.smil/index.m3u8?fmt=ts2hls
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
+http://192.168.31.2:4022/rtp/239.21.2.170:5002
 #EXTINF:-1 tvg-name="A2 CNN Albania" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/A2CNNAlbania.png" group-title="国际",A2 CNN Albania
 https://tv.a2news.com/live/smil:a2cnnweb.stream.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="ACNN (480p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ACNN480p.png" group-title="国际",ACNN (480p)
 https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_014/Stream/playlist.m3u8
-#EXTINF:-1 tvg-name="Asharq Discovery (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/AsharqDiscovery1080p.png" group-title="国际",Asharq Discovery (1080p)
-https://svs.itworkscdn.net/asharqdiscoverylive/asharqd.smil/playlist_dvr.m3u8
 #EXTINF:-1 tvg-name="BBC AMERICA" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAMERICA.png" group-title="国际",BBC AMERICA
 https://fl51.moveonjoy.com/BBC_AMERICA/index.m3u8
 #EXTINF:-1 tvg-name="BBC America" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/BBCAmerica.png" group-title="国际",BBC America
@@ -85,127 +87,9 @@ https://jmp2.uk/plu-66e0b4536ad04d0008fff4b2.m3u8
 https://jmp2.uk/plu-673248f9030a2c0008033af8.m3u8
 #EXTINF:-1 tvg-name="CNNi" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/CNNi.png" group-title="国际",CNNi
 https://jmp2.uk/plu-66c45afaa72e7b0008a2b153.m3u8
-#EXTINF:-1 tvg-name="DISCOVERY FAMILY CHANNEL" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/DISCOVERYFAMILYCHANNEL.png" group-title="国际",DISCOVERY FAMILY CHANNEL
-https://fl51.moveonjoy.com/DISCOVERY_FAMILY_CHANNEL/index.m3u8
-#EXTINF:-1 tvg-name="DISCOVERY LIFE" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/DISCOVERYLIFE.png" group-title="国际",DISCOVERY LIFE
-https://fl51.moveonjoy.com/DISCOVERY_LIFE/index.m3u8
-#EXTINF:-1 tvg-name="Discovery Channel" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/DiscoveryChannel.png" group-title="国际",Discovery Channel
-https://fl51.moveonjoy.com/Discovery_Channel/index.m3u8
-#EXTINF:-1 tvg-name="Discovery Science" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/DiscoveryScience.png" group-title="国际",Discovery Science
-https://fl51.moveonjoy.com/Discovery_Science/index.m3u8
-#EXTINF:-1 tvg-name="FOX 10 Phoenix AZ (KSAZ) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX10PhoenixAZKSAZ720p.png" group-title="国际",FOX 10 Phoenix AZ (KSAZ) (720p)
-https://livetv-fa.tubi.video/ksaz/index.m3u8
-#EXTINF:-1 tvg-name="FOX 11 Los Angeles" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX11LosAngeles.png" group-title="国际",FOX 11 Los Angeles
-https://jmp2.uk/plu-667f2c7b22acab0008b7072b.m3u8
-#EXTINF:-1 tvg-name="FOX 11 Los Angeles CA (KTTV) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX11LosAngelesCAKTTV720p.png" group-title="国际",FOX 11 Los Angeles CA (KTTV) (720p)
-https://livetv-fa.tubi.video/kttv/index.m3u8
-#EXTINF:-1 tvg-name="FOX 13 Salt Lake City UT (KSTU) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX13SaltLakeCityUTKSTU720p.png" group-title="国际",FOX 13 Salt Lake City UT (KSTU) (720p)
-https://livetv-fa.tubi.video/kstu2/playlist.m3u8
-#EXTINF:-1 tvg-name="FOX 13 Seattle WA (KCPQ) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX13SeattleWAKCPQ720p.png" group-title="国际",FOX 13 Seattle WA (KCPQ) (720p)
-https://livetv-fa.tubi.video/kcpq/index.m3u8
-#EXTINF:-1 tvg-name="FOX 13 Tampa Bay FL (WTVT) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX13TampaBayFLWTVT720p.png" group-title="国际",FOX 13 Tampa Bay FL (WTVT) (720p)
-https://livetv-fa.tubi.video/wtvt/index.m3u8
-#EXTINF:-1 tvg-name="FOX 17 Grand Rapids MI (WXMI) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX17GrandRapidsMIWXMI720p.png" group-title="国际",FOX 17 Grand Rapids MI (WXMI) (720p)
-https://livetv-fa.tubi.video/wxmi/playlist.m3u8
-#EXTINF:-1 tvg-name="FOX 2 Detroit MI (WJBK) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX2DetroitMIWJBK720p.png" group-title="国际",FOX 2 Detroit MI (WJBK) (720p)
-https://livetv-fa.tubi.video/wjbk/index.m3u8
-#EXTINF:-1 tvg-name="FOX 2 San Francisco CA (KTVU) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX2SanFranciscoCAKTVU720p.png" group-title="国际",FOX 2 San Francisco CA (KTVU) (720p)
-https://livetv-fa.tubi.video/ktvu/index.m3u8
-#EXTINF:-1 tvg-name="FOX 23 Cape Girardeau MO (KBSI-DT1) (720p) [Not 24/7]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX23CapeGirardeauMOKBSI-DT1720pNot247.png" group-title="国际",FOX 23 Cape Girardeau MO (KBSI-DT1) (720p) [Not 24/7]
-https://live.field59.com/kbsi/kbsi1/playlist.m3u8
-#EXTINF:-1 tvg-name="FOX 26 Houston TX (KRIV) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX26HoustonTXKRIV720p.png" group-title="国际",FOX 26 Houston TX (KRIV) (720p)
-https://livetv-fa.tubi.video/kriv/index.m3u8
-#EXTINF:-1 tvg-name="FOX 29 Philadelphia PA (WTXF-TV) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX29PhiladelphiaPAWTXF-TV720p.png" group-title="国际",FOX 29 Philadelphia PA (WTXF-TV) (720p)
-https://livetv-fa.tubi.video/wtxf/index.m3u8
-#EXTINF:-1 tvg-name="FOX 32 Chicago IL (WFLD) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX32ChicagoILWFLD720p.png" group-title="国际",FOX 32 Chicago IL (WFLD) (720p)
-https://livetv-fa.tubi.video/wfld/index.m3u8
-#EXTINF:-1 tvg-name="FOX 4 Dallas / Fort Worth TX (KDFW) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX4DallasFortWorthTXKDFW720p.png" group-title="国际",FOX 4 Dallas / Fort Worth TX (KDFW) (720p)
-https://livetv-fa.tubi.video/kdfw/index.m3u8
-#EXTINF:-1 tvg-name="FOX 47 Lansing MI (WSYM) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX47LansingMIWSYM720p.png" group-title="国际",FOX 47 Lansing MI (WSYM) (720p)
-https://livetv-fa.tubi.video/wsym/playlist.m3u8
-#EXTINF:-1 tvg-name="FOX 5 New York NY (WNYW) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX5NewYorkNYWNYW720p.png" group-title="国际",FOX 5 New York NY (WNYW) (720p)
-https://livetv-fa.tubi.video/wnyw/index.m3u8
-#EXTINF:-1 tvg-name="FOX 5 Washington DC (WTTG) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX5WashingtonDCWTTG720p.png" group-title="国际",FOX 5 Washington DC (WTTG) (720p)
-https://livetv-fa.tubi.video/wttg/index.m3u8
-#EXTINF:-1 tvg-name="FOX 6 Milwaukee WI (WITI) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX6MilwaukeeWIWITI720p.png" group-title="国际",FOX 6 Milwaukee WI (WITI) (720p)
-https://livetv-fa.tubi.video/witi/index.m3u8
-#EXTINF:-1 tvg-name="FOX 7 Austin TX (KTBC) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX7AustinTXKTBC720p.png" group-title="国际",FOX 7 Austin TX (KTBC) (720p)
-https://livetv-fa.tubi.video/ktbc/index.m3u8
-#EXTINF:-1 tvg-name="FOX 9 ST Paul Minneapolis MN (KMSP) (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOX9STPaulMinneapolisMNKMSP720p.png" group-title="国际",FOX 9 ST Paul Minneapolis MN (KMSP) (720p)
-https://livetv-fa.tubi.video/kmsp/index.m3u8
-#EXTINF:-1 tvg-name="FOX Business (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXBusiness1080p.png" group-title="国际",FOX Business (1080p)
-http://41.205.93.154/FOXBUSINESS/index.m3u8
-#EXTINF:-1 tvg-name="FOX Business Network" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXBusinessNetwork.png" group-title="国际",FOX Business Network
-https://fl51.moveonjoy.com/FOX_Business_Network/index.m3u8
-#EXTINF:-1 tvg-name="FOX Deportes" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXDeportes.png" group-title="国际",FOX Deportes
-https://jmp2.uk/plu-63d0269d60bc8f000890facc.m3u8
-#EXTINF:-1 tvg-name="FOX News Channel" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXNewsChannel.png" group-title="国际",FOX News Channel
-https://fl51.moveonjoy.com/FOX_NEWS_CHANNEL/index.m3u8
-#EXTINF:-1 tvg-name="FOX SOUL" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXSOUL.png" group-title="国际",FOX SOUL
-https://fl51.moveonjoy.com/FOX_SOUL/index.m3u8
-#EXTINF:-1 tvg-name="FOX Soul" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXSoul.png" group-title="国际",FOX Soul
-https://aka-live491.delivery.roku.com/a78c669e-4142-41cb-82d0-f445277b257c/t2-origin/out/v1/live.m3u8
-#EXTINF:-1 tvg-name="FOX Sports" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXSports.png" group-title="国际",FOX Sports
-https://jmp2.uk/plu-5a74b8e1e22a61737979c6bf.m3u8
-#EXTINF:-1 tvg-name="FOX Sports" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXSports.png" group-title="国际",FOX Sports
-https://aka-live491.delivery.roku.com/53495639-a28f-4ed7-ba19-345e9468fb01/t2-origin/out/v1/live.m3u8
-#EXTINF:-1 tvg-name="FOX Sports [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXSportsGeo-blocked.png" group-title="国际",FOX Sports [Geo-blocked]
-https://amg02855-foxsports-amg02855c1-xumo-us-1755.playouts.now.amagi.tv/Fox-Sports-AmazonNews/playlist.m3u8
-#EXTINF:-1 tvg-name="FOX USA (WFLX)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXUSAWFLX.png" group-title="国际",FOX USA (WFLX)
-https://fl51.moveonjoy.com/FL_West_Palm_Beach_FOX/index.m3u8
-#EXTINF:-1 tvg-name="FOX USA (WNYW)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXUSAWNYW.png" group-title="国际",FOX USA (WNYW)
-https://fl51.moveonjoy.com/FOX_EAST/index.m3u8
-#EXTINF:-1 tvg-name="FOX Weather" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXWeather.png" group-title="国际",FOX Weather
-https://jmp2.uk/plu-640a68880e884c0009979cc2.m3u8
-#EXTINF:-1 tvg-name="FOX Weather" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FOXWeather.png" group-title="国际",FOX Weather
-https://aka-live491.delivery.roku.com/2ff50939-341e-4fa8-becf-718769322f14/t2-origin/out/v1/live.m3u8
-#EXTINF:-1 tvg-name="Fox News Radio (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxNewsRadio720p.png" group-title="国际",Fox News Radio (720p)
-https://radiovid.foxnews.com/hls/live/661547/RADIOVID/index.m3u8
-#EXTINF:-1 tvg-name="Fox Soul" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxSoul.png" group-title="国际",Fox Soul
-https://fl41.moveonjoy.com/FOX_SOUL/index.m3u8
-#EXTINF:-1 tvg-name="Fox Sports (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxSports720p.png" group-title="国际",Fox Sports (720p)
-https://livetv-fa.tubi.video/fox-sports2/index.m3u8
-#EXTINF:-1 tvg-name="Fox Sports 1" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxSports1.png" group-title="国际",Fox Sports 1
-https://fl41.moveonjoy.com/FOX_Sports_1/index.m3u8
-#EXTINF:-1 tvg-name="Fox Sports en Espanol (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxSportsenEspanol720p.png" group-title="国际",Fox Sports en Espanol (720p)
-https://livetv-fa.tubi.video/fox-sports-espanol2/index.m3u8
-#EXTINF:-1 tvg-name="Fox Weather (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/FoxWeather720p.png" group-title="国际",Fox Weather (720p)
-https://247wlive.foxweather.com/stream/index.m3u8
-#EXTINF:-1 tvg-name="HBO" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBO.png" group-title="国际",HBO
-http://23.237.104.106:8080/USA_HBO/index.m3u8
-#EXTINF:-1 tvg-name="HBO" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBO.png" group-title="国际",HBO
-https://fl51.moveonjoy.com/HBO/index.m3u8
-#EXTINF:-1 tvg-name="HBO Comedy" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOComedy.png" group-title="国际",HBO Comedy
-http://23.237.104.106:8080/USA_HBO_COMEDY/index.m3u8
-#EXTINF:-1 tvg-name="HBO Comedy" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOComedy.png" group-title="国际",HBO Comedy
-https://fl51.moveonjoy.com/HBO_COMEDY/index.m3u8
-#EXTINF:-1 tvg-name="HBO Family" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOFamily.png" group-title="国际",HBO Family
-https://fl51.moveonjoy.com/HBO_FAMILY/index.m3u8
-#EXTINF:-1 tvg-name="HBO Hits" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOHits.png" group-title="国际",HBO Hits
-http://23.237.104.106:8080/USA_HBO2/index.m3u8
-#EXTINF:-1 tvg-name="HBO Movies" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOMovies.png" group-title="国际",HBO Movies
-http://23.237.104.106:8080/USA_HBO_ZONE/index.m3u8
-#EXTINF:-1 tvg-name="HBO Zone" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBOZone.png" group-title="国际",HBO Zone
-https://fl51.moveonjoy.com/HBO_ZONE/index.m3u8
-#EXTINF:-1 tvg-name="HBO2" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/HBO2.png" group-title="国际",HBO2
-https://fl51.moveonjoy.com/HBO_2/index.m3u8
-#EXTINF:-1 tvg-name="ID (Investigation Discovery)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/IDInvestigationDiscovery.png" group-title="国际",ID (Investigation Discovery)
-https://fl51.moveonjoy.com/INVESTIGATION_DISCOVERY/index.m3u8
-#EXTINF:-1 tvg-name="KPTV FOX 12 Oregon News" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/KPTVFOX12OregonNews.png" group-title="国际",KPTV FOX 12 Oregon News
-https://aka-live491.delivery.roku.com/6cf6f0d1-6a6c-470d-b894-d7302c15c901/t2-origin/out/v1/live.m3u8
-#EXTINF:-1 tvg-name="Khushboo Bangla (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/KhushbooBangla720p.png" group-title="国际",Khushboo Bangla (720p)
-https://cdn-4.pishow.tv/live/1473/master.m3u8
-#EXTINF:-1 tvg-name="LiveNOW from FOX" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/LiveNOWfromFOX.png" group-title="国际",LiveNOW from FOX
-https://aka-live491.delivery.roku.com/eaf7d889-16e0-4c14-a299-a2932df9f467/t2-origin/out/v1/live.m3u8
-#EXTINF:-1 tvg-name="LiveNOW from FOX" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/LiveNOWfromFOX.png" group-title="国际",LiveNOW from FOX
-https://jmp2.uk/plu-63d025db4e83e700086eaa96.m3u8
-#EXTINF:-1 tvg-name="LiveNOW from FOX (720p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/LiveNOWfromFOX720p.png" group-title="国际",LiveNOW from FOX (720p)
-https://fox-foxnewsnow-vizio.amagi.tv/playlist.m3u8
-#EXTINF:-1 tvg-name="Mister Rogers' Neighborhood" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/MisterRogersNeighborhood.png" group-title="国际",Mister Rogers' Neighborhood
-https://jmp2.uk/plu-65e23f340d4561000821540d.m3u8
 #EXTINF:-1 tvg-name="NHK BS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS.png" group-title="国际",NHK BS
 https://mt01.utako.moe/NHK_BS/index.m3u8
-#EXTINF:-1 tvg-name="NHK BS4K" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS4K.png" group-title="国际",NHK BS4K
+#EXTINF:-1 tvg-name="NHK BS" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKBS.png" group-title="国际",NHK BS
 https://mt01.utako.moe/bsp4k/index.m3u8
 #EXTINF:-1 tvg-name="NHK E" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKE.png" group-title="国际",NHK E
 https://mt01.utako.moe/NHK_E/index.m3u8
@@ -217,17 +101,3 @@ https://newssimul-stream.nhk.jp/hls/live/2010561/nhknewssimul/master.m3u8
 https://master.nhkworld.jp/nhkworld-tv/playlist/live.m3u8
 #EXTINF:-1 tvg-name="NHK World-Japan (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWorld-Japan1080p.png" group-title="国际",NHK World-Japan (1080p)
 https://livehub-voidnet.onrender.com/cluster/streamcore/jp/NHK_StreamOrchestrator.m3u8
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
-http://150.138.8.132/PLTV/88888888/224/3221227292/517077885.smil/index.m3u8?fmt=ts2hls
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际",NHK世界台
-http://192.168.31.2:4022/rtp/239.21.2.170:5002
-#EXTINF:-1 tvg-name="WBTV HBO Boxing (1080p) [Geo-blocked]" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/WBTVHBOBoxing1080pGeo-blocked.png" group-title="国际",WBTV HBO Boxing (1080p) [Geo-blocked]
-https://livetv-fa.tubi.video/wbd-hbo-boxing/playlist.m3u8
-#EXTINF:-1 tvg-name="Zoey Foxx" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ZoeyFoxx.png" group-title="国际",Zoey Foxx
-https://cdn.baddiehub.com/ZFxx.mp4
-#EXTINF:-1 tvg-name="Zoey Foxx 2" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ZoeyFoxx2.png" group-title="国际",Zoey Foxx 2
-https://cdn.baddiehub.com/ec53.mp4
-#EXTINF:-1 tvg-name="Zoey Foxx 3" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ZoeyFoxx3.png" group-title="国际",Zoey Foxx 3
-https://cdn.baddiehub.com/hepfy.mp4
-#EXTINF:-1 tvg-name="Zoey Foxx 4" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ZoeyFoxx4.png" group-title="国际",Zoey Foxx 4
-https://cdn.baddiehub.com/x7sn.mp4
