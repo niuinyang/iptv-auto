@@ -25,7 +25,7 @@ jobs:
       - name: Merge sources
         run: python scripts/merge.py
       - name: Test streams (Adaptive Mode)
-        run: python scripts/test_adaptive.py
+        run: python scripts/test_adaptive_async_batch.py
       - name: Classify channels
         run: python scripts/classify.py
       - name: Commit and Push
