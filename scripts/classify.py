@@ -1,20 +1,20 @@
 import os
 import requests
 import re
+from collections import defaultdict
 
 # ------------------- 输入输出文件 -------------------
 input_file = "output/working.m3u"         # 可播源
 custom_url = "https://raw.githubusercontent.com/sumingyd/Telecom-Shandong-IPTV-List/refs/heads/main/Telecom-Shandong-Multicast.m3u"
 output_dir = "output"
 os.makedirs(output_dir, exist_ok=True)
+os.makedirs("custom_m3u", exist_ok=True)
 
-# ------------------- 自定义组播源替换网关 -------------------
+# ------------------- 自备组播源替换网关 -------------------
 new_gateway = "192.168.31.2"
 new_port = "4022"
 custom_file = os.path.join("custom_m3u","Telecom-Shandong-Multicast-local.m3u")
-os.makedirs("custom_m3u", exist_ok=True)
 
-# 下载自备组播源并批量替换网关和端口
 r = requests.get(custom_url)
 if r.status_code != 200:
     raise Exception(f"下载失败，状态码 {r.status_code}")
@@ -34,7 +34,7 @@ with open(custom_file, "w", encoding="utf-8") as f:
 
 # ------------------- 分类关键字 -------------------
 categories = {
-    "央视": ["CCTV", "央视"],
+    "央视": ["CCTV","央视"],
     "卫视": ["卫视"],
     "地方": ["山东","江苏","浙江","广东","北京","上海","天津","湖南","济南","南京","深圳","重庆","四川","湖北","陕西","福建","贵州","云南","广西","海南","内蒙古","宁夏","青海","吉林","辽宁","黑龙江","安徽","江西","河南"],
     "港台": ["香港","TVB","台湾","台视","中视","华视","翡翠","三立"],
@@ -61,7 +61,7 @@ name_map = {
     "CCTV-15":"CCTV-15音乐","央视音乐":"CCTV-15音乐",
 }
 
-# ------------------- 获取远程仓库台标文件 -------------------
+# ------------------- 获取远程台标 -------------------
 BASE_LOGO_URL = "https://raw.githubusercontent.com/fanmingming/live/main/logo/"
 GITHUB_API_URL = "https://api.github.com/repos/fanmingming/live/contents/logo"
 
@@ -89,9 +89,9 @@ def find_logo(title_std):
             return BASE_LOGO_URL + logo
     return ""
 
-# ------------------- 初始化分类文件 -------------------
-files = {k:["#EXTM3U"] for k in categories}
-files["其他"] = ["#EXTM3U"]
+# ------------------- 初始化 channel_map -------------------
+channel_map = {cat: defaultdict(list) for cat in categories}
+channel_map["其他"] = defaultdict(list)
 
 # ------------------- 读取可播源 -------------------
 all_pairs = []
@@ -109,40 +109,52 @@ if os.path.exists(custom_file):
 # ------------------- 分类 + 名称统一 + 台标 -------------------
 for title,url in all_pairs:
     title_clean = title.replace(" 高清","").replace(" HD","").replace(" 标清","")
-    if title_clean in name_map:
-        title_std = name_map[title_clean]
-    else:
-        title_std = title
-        for key,value in name_map.items():
-            if "CCTV" in key and key.lower() in title_clean.lower():
-                title_std = value
-                break
-
+    title_std = name_map.get(title_clean, title_clean)
+    
     added = False
     for cat,kws in categories.items():
         if any(kw.lower() in title_std.lower() for kw in kws):
-            logo = find_logo(title_std)
-            files[cat].append(f'#EXTINF:-1 tvg-logo="{logo}",{title_std}')
-            files[cat].append(url)
+            channel_map[cat][title_std].append(url)
             added = True
             break
     if not added:
-        logo = find_logo(title_std)
-        files["其他"].append(f'#EXTINF:-1 tvg-logo="{logo}",{title_std}')
-        files["其他"].append(url)
+        channel_map["其他"][title_std].append(url)
 
-# ------------------- 输出分类 m3u -------------------
+# ------------------- 内部排序 -------------------
+cctv_order = ["CCTV-1综合","CCTV-2财经","CCTV-3娱乐","CCTV-4中文国际",
+              "CCTV-5体育","CCTV-6电影","CCTV-7国防军事","CCTV-8电视剧",
+              "CCTV-9纪录","CCTV-10科教","CCTV-11戏曲","CCTV-12社会与法",
+              "CCTV-13新闻","CCTV-14少儿","CCTV-15音乐"]
+
+province_order = ["北京","天津","河北","山西","内蒙古","辽宁","吉林","黑龙江",
+                  "上海","江苏","浙江","安徽","福建","江西","山东","河南",
+                  "湖北","湖南","广东","广西","海南","重庆","四川","贵州",
+                  "云南","西藏","陕西","甘肃","青海","宁夏","新疆"]
+
 category_order = ["央视","卫视","地方","港台","国际","网络直播","其他"]
-for cat in category_order:
-    with open(os.path.join(output_dir,f"{cat}.m3u"),"w",encoding="utf-8") as f:
-        f.write("\n".join(files.get(cat, ["#EXTM3U"])))
-
-# ------------------- 输出汇总 m3u -------------------
-summary_file = os.path.join(output_dir,"summary.m3u")
 summary_content = ["#EXTM3U"]
+
 for cat in category_order:
-    summary_content.extend(files.get(cat, ["#EXTM3U"])[1:])
-with open(summary_file,"w",encoding="utf-8") as f:
+    if cat == "央视":
+        sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
+    elif cat == "地方":
+        sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: next((i for i,v in enumerate(province_order) if v in x), 999))
+    else:
+        sorted_channels = sorted(channel_map[cat].keys())
+
+    # 输出每个频道的所有源，保证同频道源连续
+    for ch in sorted_channels:
+        logo = find_logo(ch)
+        for url in channel_map[cat][ch]:
+            summary_content.append(f'#EXTINF:-1 tvg-logo="{logo}",{ch}')
+            summary_content.append(url)
+
+    # 写分类文件
+    with open(os.path.join(output_dir,f"{cat}.m3u"),"w", encoding="utf-8") as f:
+        f.write("\n".join(["#EXTM3U"] + [line for ch in sorted_channels for url in channel_map[cat][ch] for line in [f'#EXTINF:-1 tvg-logo="{find_logo(ch)}",{ch}', url]]))
+
+# ------------------- 写汇总文件 -------------------
+with open(os.path.join(output_dir,"summary.m3u"),"w", encoding="utf-8") as f:
     f.write("\n".join(summary_content))
 
-print("✅ 分类完成，汇总 m3u 生成，台标自动抓取并匹配，自备组播源自动替换网关合并完成。")
+print("✅ 全流程完成：自备组播源替换、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
