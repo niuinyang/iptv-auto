@@ -16,6 +16,7 @@ new_gateway = "192.168.31.2"
 new_port = "4022"
 custom_multicast_file = os.path.join("custom_m3u", "Telecom-Shandong-Multicast-local.m3u")
 
+# 下载组播源并修改网关
 try:
     r = requests.get(custom_multicast_url, timeout=10)
     r.raise_for_status()
@@ -123,7 +124,6 @@ if os.path.exists(input_file):
             all_pairs.append((data[i], data[i+1], False))  # False 表示非自备源
 
 # ------------------- 合并自备源 -------------------
-# 顺序：可播源 → 自备组播源 → 自备 HTTP 源
 all_pairs.extend(custom_multicast_pairs)
 all_pairs.extend(custom_http_pairs)
 
@@ -161,6 +161,7 @@ province_order = ["北京","天津","河北","山西","内蒙古","辽宁","吉�
 category_order = ["央视","卫视","地方","港台","国际","网络直播","其他"]
 summary_content = ["#EXTM3U"]
 
+# ------------------- 输出分类及汇总 -------------------
 for cat in category_order:
     if cat == "央视":
         sorted_channels = sorted(channel_map[cat].keys(), key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
@@ -169,5 +170,19 @@ for cat in category_order:
     else:
         sorted_channels = sorted(channel_map[cat].keys())
 
-    # 输出每个分类的 M3U 文件
-    with open(os.path.join(output_dir, f"{cat}.m
+    # 写分类文件
+    with open(os.path.join(output_dir, f"{cat}.m3u"), "w", encoding="utf-8", errors="ignore") as f:
+        f.write("#EXTM3U\n")
+        for ch in sorted_channels:
+            logo = find_logo_cached(ch)
+            for url in channel_map[cat][ch]:
+                f.write(f'#EXTINF:-1 tvg-logo="{logo}",{ch}\n')
+                f.write(f'{url}\n')
+                summary_content.append(f'#EXTINF:-1 tvg-logo="{logo}",{ch}')
+                summary_content.append(url)
+
+# 写汇总文件
+with open(os.path.join(output_dir, "summary.m3u"), "w", encoding="utf-8", errors="ignore") as f:
+    f.write("\n".join(summary_content))
+
+print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。
