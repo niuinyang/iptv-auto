@@ -106,19 +106,25 @@ if os.path.exists(custom_file):
     custom_pairs = [(custom_data[i], custom_data[i+1]) for i in range(0,len(custom_data)-1) if custom_data[i].startswith("#EXTINF")]
     all_pairs.extend(custom_pairs)
 
-# ------------------- 分类 + 名称统一 + 台标 -------------------
-for title,url in all_pairs:
+# ------------------- 分类 + 名称统一 + 台标 + 自备源优先 -------------------
+for title, url in all_pairs:
     title_clean = title.replace(" 高清","").replace(" HD","").replace(" 标清","")
     title_std = name_map.get(title_clean, title_clean)
     
     added = False
     for cat,kws in categories.items():
         if any(kw.lower() in title_std.lower() for kw in kws):
-            channel_map[cat][title_std].append(url)
+            if "custom_m3u" in url or url.startswith(f"http://{new_gateway}:{new_port}"):
+                channel_map[cat][title_std].insert(0, url)  # 自备源插入开头
+            else:
+                channel_map[cat][title_std].append(url)
             added = True
             break
     if not added:
-        channel_map["其他"][title_std].append(url)
+        if "custom_m3u" in url or url.startswith(f"http://{new_gateway}:{new_port}"):
+            channel_map["其他"][title_std].insert(0, url)
+        else:
+            channel_map["其他"][title_std].append(url)
 
 # ------------------- 内部排序 -------------------
 cctv_order = ["CCTV-1综合","CCTV-2财经","CCTV-3娱乐","CCTV-4中文国际",
@@ -142,7 +148,7 @@ for cat in category_order:
     else:
         sorted_channels = sorted(channel_map[cat].keys())
 
-    # 输出每个频道的所有源，保证同频道源连续
+    # 输出每个频道的所有源
     for ch in sorted_channels:
         logo = find_logo(ch)
         for url in channel_map[cat][ch]:
@@ -157,4 +163,4 @@ for cat in category_order:
 with open(os.path.join(output_dir,"summary.m3u"),"w", encoding="utf-8") as f:
     f.write("\n".join(summary_content))
 
-print("✅ 全流程完成：自备组播源替换、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
+print("✅ 全流程完成：自备组播源置顶、分类、台标匹配、内部排序、同频道源连续、汇总文件生成。")
