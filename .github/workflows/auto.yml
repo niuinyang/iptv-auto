@@ -1,0 +1,31 @@
+name: IPTV Auto Merge & Test
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 每天凌晨2点自动运行
+  workflow_dispatch:      # 手动触发也行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Merge sources
+        run: python scripts/merge.py
+      - name: Test streams
+        run: python scripts/test.py
+      - name: Classify channels
+        run: python scripts/classify.py
+      - name: Commit and Push
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/
+          git commit -m "Auto update IPTV lists" || echo "No changes"
+          git push
