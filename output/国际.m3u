@@ -1,8 +1,4 @@
 #EXTM3U
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
-http://150.138.8.132/PLTV/88888888/224/3221227292/517077885.smil/index.m3u8?fmt=ts2hls
-#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
-http://192.168.31.2:4022/rtp/239.21.2.170:5002
 #EXTINF:-1 tvg-name="A2 CNN Albania" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/A2CNNAlbania.png" group-title="国际频道",A2 CNN Albania
 https://tv.a2news.com/live/smil:a2cnnweb.stream.smil/playlist.m3u8
 #EXTINF:-1 tvg-name="ACNN (480p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/ACNN480p.png" group-title="国际频道",ACNN (480p)
@@ -99,3 +95,7 @@ https://newssimul-stream.nhk.jp/hls/live/2010561/nhknewssimul/master.m3u8
 https://master.nhkworld.jp/nhkworld-tv/playlist/live.m3u8
 #EXTINF:-1 tvg-name="NHK World-Japan (1080p)" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHKWorld-Japan1080p.png" group-title="国际频道",NHK World-Japan (1080p)
 https://livehub-voidnet.onrender.com/cluster/streamcore/jp/NHK_StreamOrchestrator.m3u8
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
+http://150.138.8.132/PLTV/88888888/224/3221227292/517077885.smil/index.m3u8?fmt=ts2hls
+#EXTINF:-1 tvg-name="NHK世界台" tvg-logo="https://raw.githubusercontent.com/fanmingming/live/main/tv/NHK世界台.png" group-title="国际频道",NHK世界台
+http://192.168.31.2:4022/rtp/239.21.2.170:5002
