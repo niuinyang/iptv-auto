@@ -69,9 +69,6 @@ def parse_pairs(lines, is_custom=False, source_type="other"):
             pairs.append((title, url, is_custom, source_type))
     return pairs
 
-multicast_pairs = parse_pairs(make_multicast_local(fetch_lines(custom_multicast_url)), True, "multicast")
-http_pairs = parse_pairs(fetch_lines(custom_http_url), True, "http")
-
 # ------------------- 分类关键字 -------------------
 categories = {
     "央视": ["CCTV", "央视"], 
@@ -104,7 +101,6 @@ name_map = {
     "CCTV-2":"CCTV-2财经","央视财经":"CCTV-2财经",
     "CCTV-13":"CCTV-13新闻","央视新闻":"CCTV-13新闻"
 }
-
 province_channels = {
     "山东卫视": ["山东卫视", "SDTV", "山东电视"],
     "江苏卫视": ["江苏卫视", "JSTV"],
@@ -119,147 +115,135 @@ province_channels = {
     "陕西卫视": ["陕西卫视", "SXTV"],
     "福建东南卫视": ["东南卫视", "FJTV"]
 }
-
 if os.path.exists(name_map_file):
     with open(name_map_file, "r", encoding="utf-8") as f:
         auto_name_map_dict = json.load(f)
 else:
     auto_name_map_dict = {}
-
 unmapped = set()
 
 def smart_name_map(title):
     t = title.strip()
     if not t:
         return "unknown"
-    if t in name_map:
-        return name_map[t]
-    if t in auto_name_map_dict:
-        return auto_name_map_dict[t]
+    if t in name_map: return name_map[t]
+    if t in auto_name_map_dict: return auto_name_map_dict[t]
 
     t_clean = re.sub(r'(高清|HD|标清|4K)', '', t, flags=re.I).replace(" ", "").replace("-", "")
-
     if t_clean.upper().startswith("CCTV") or t_clean.startswith("央视"):
         m = re.search(r'\d+', t_clean)
         if m:
             num = m.group(0)
-            mapping = {
-                "1":"CCTV-1综合","2":"CCTV-2财经","3":"CCTV-3娱乐","4":"CCTV-4中文国际",
-                "5":"CCTV-5体育","6":"CCTV-6电影","7":"CCTV-7国防军事","8":"CCTV-8电视剧",
-                "9":"CCTV-9纪录","10":"CCTV-10科教","11":"CCTV-11戏曲","12":"CCTV-12社会与法",
-                "13":"CCTV-13新闻","14":"CCTV-14少儿","15":"CCTV-15音乐"
-            }
+            mapping = {str(i): f"CCTV-{i}{suffix}" for i,suffix in 
+                       enumerate(["综合","财经","娱乐","中文国际","体育","电影","国防军事","电视剧","纪录","科教","戏曲","社会与法","新闻","少儿","音乐"],1)}
             return mapping.get(num, t)
-
     t_upper = t_clean.upper()
     for std_name, aliases in province_channels.items():
         for a in aliases:
             a_clean = a.upper().replace(" ", "").replace("-", "")
             if a_clean in t_upper:
                 return std_name
-
     unmapped.add(t)
     result = normalize_spaces(remove_symbols_and_emoji(remove_control_chars(t)))
-    if not result:
-        result = "unknown"
-    return result
+    return result if result else "unknown"
 
-# ------------------- 合并所有源 -------------------
+# ------------------- 合并源 -------------------
 lines = open(input_file, encoding="utf-8").read().splitlines() if os.path.exists(input_file) else []
 working_pairs = parse_pairs(lines, False, "other")
+multicast_pairs = parse_pairs(make_multicast_local(fetch_lines(custom_multicast_url)), True, "multicast")
+http_pairs = parse_pairs(fetch_lines(custom_http_url), True, "http")
 merged = multicast_pairs + http_pairs + working_pairs
 
-# ------------------- 构建频道表（严格组播置顶） -------------------
+# ------------------- 构建频道表 -------------------
 channel_map = {c: defaultdict(list) for c in categories}
 channel_map["其他"] = defaultdict(list)
 custom_channels = set()
-
-for title, url, is_custom, source_type in merged:
+for title,url,is_custom,source_type in merged:
     std_name = smart_name_map(title)
     std_name = std_name or "unknown"
     is_4k = bool(re.search(r'4K', title, re.I))
-    if is_4k:
-        cat = "4K频道"
+    if is_4k: cat="4K频道"
     else:
-        cat = "其他"
-        for c, kws in categories.items():
-            if c == "4K频道":
-                continue
+        cat="其他"
+        for c,kws in categories.items():
+            if c=="4K频道": continue
             if any(kw.lower() in (std_name or "").lower() for kw in kws):
-                cat = c
+                cat=c
                 break
-
     lst = channel_map[cat][std_name]
     if is_custom:
         custom_channels.add(std_name)
-        if source_type=="multicast":
-            lst.insert(0, url)  # 自备组播最前
+        if source_type=="multicast": lst.insert(0,url)
         elif source_type=="http":
             idx = next((i for i,v in enumerate(lst) if not v.startswith("http://"+new_gateway)), len(lst))
-            lst.insert(idx, url)
-    else:
-        lst.append(url)  # 其他源最后
+            lst.insert(idx,url)
+    else: lst.append(url)
 
 # ------------------- 输出 summary & 分类文件 -------------------
-summary_lines = ["#EXTM3U"]
+summary_lines=["#EXTM3U"]
 for cat in category_order:
-    keys = list(channel_map[cat].keys())
-    if cat == "央视":
-        keys.sort(key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
-    else:
-        keys.sort()
-
-    path = os.path.join(output_dir, f"{cat}.m3u")
-    with open(path, "w", encoding="utf-8") as f:
+    keys=list(channel_map[cat].keys())
+    if cat=="央视": keys.sort(key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
+    else: keys.sort()
+    keys.sort(key=lambda x: 0 if x in custom_channels else 1)
+    path=os.path.join(output_dir,f"{cat}.m3u")
+    with open(path,"w",encoding="utf-8") as f:
         f.write("#EXTM3U\n")
         for k in keys:
-            logo = build_logo_url(k)
-            group_title = group_title_map.get(cat, cat)
+            logo=build_logo_url(k)
+            group_title=group_title_map.get(cat,cat)
             for u in channel_map[cat][k]:
-                line = f'#EXTINF:-1 tvg-name="{k}" tvg-logo="{logo}" group-title="{group_title}",{k}'
-                f.write(line + "\n" + u + "\n")
+                line=f'#EXTINF:-1 tvg-name="{k}" tvg-logo="{logo}" group-title="{group_title}",{k}'
+                f.write(line+"\n"+u+"\n")
                 summary_lines.append(line)
                 summary_lines.append(u)
 
-# ------------------- 成人黑名单检测 -------------------
-adult_domains = [
-    "baddiehub.com",
-    "porn",
-    "xvideos",
-    "xnxx",
-    "adult",
-    "sex"
-]
+# ------------------- 成人黑名单 -------------------
+def fetch_adult_blacklist():
+    urls=[
+        "https://raw.githubusercontent.com/emiliodallatorre/adult-hosts-list/main/list.txt",
+        "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts00",
+        "https://raw.githubusercontent.com/Bon-Appetit/porn-domains/main/domains.txt"
+    ]
+    domains=set()
+    for url in urls:
+        try:
+            r=requests.get(url,timeout=10); r.raise_for_status()
+            for line in r.text.splitlines():
+                line=line.strip()
+                if line and not line.startswith("#"):
+                    domain=re.sub(r'^0\.0\.0\.0\s+','',line)
+                    domains.add(domain.lower())
+        except Exception as e:
+            print(f"⚠️ 下载成人黑名单失败: {url}, 错误: {e}")
+    return domains
 
-adult_channels = []
-clean_summary = []
-
-for i in range(0, len(summary_lines), 2):
-    line_extinf = summary_lines[i]
-    line_url = summary_lines[i+1]
-    if any(domain.lower() in line_url.lower() for domain in adult_domains):
-        adult_channels.append((line_extinf, line_url))
+adult_domains = fetch_adult_blacklist()
+adult_channels=[]; clean_summary=[]
+for i in range(0,len(summary_lines),2):
+    if i+1>=len(summary_lines): break
+    ext, url = summary_lines[i], summary_lines[i+1]
+    if any(d in url.lower() for d in adult_domains):
+        adult_channels.append((ext,url))
     else:
-        clean_summary.append(line_extinf)
-        clean_summary.append(line_url)
+        clean_summary.append(ext); clean_summary.append(url)
 
 # 写入 au.m3u
-with open(os.path.join(output_dir, "au.m3u"), "w", encoding="utf-8") as f:
+with open(os.path.join(output_dir,"au.m3u"),"w",encoding="utf-8") as f:
     f.write("#EXTM3U\n")
-    for extinf, url in adult_channels:
-        f.write(extinf + "\n" + url + "\n")
+    for ext,url in adult_channels:
+        f.write(ext+"\n"+url+"\n")
 
-# 覆盖 summary.m3u，删除成人源
-with open(os.path.join(output_dir,"summary.m3u"), "w", encoding="utf-8") as f:
+# 覆盖 summary.m3u
+with open(os.path.join(output_dir,"summary.m3u"),"w",encoding="utf-8") as f:
     f.write("\n".join(clean_summary))
 
-# ------------------- 自动更新 name_map_auto.json -------------------
+# ------------------- 自动更新 name_map -------------------
 if unmapped:
     auto_name_map_dict.update({k:k for k in unmapped})
-    os.makedirs(os.path.dirname(name_map_file), exist_ok=True)
-    with open(name_map_file, "w", encoding="utf-8") as f:
-        json.dump(auto_name_map_dict, f, ensure_ascii=False, indent=2)
+    os.makedirs(os.path.dirname(name_map_file),exist_ok=True)
+    with open(name_map_file,"w",encoding="utf-8") as f:
+        json.dump(auto_name_map_dict,f,ensure_ascii=False,indent=2)
     print(f"📝 更新自动 name_map 文件: {name_map_file}, 新增 {len(unmapped)} 个未匹配频道")
 
-print(f"✅ classify.py 执行完成：频道分类、排序、组播置顶、自备源优先、summary 输出完成")
-print(f"✅ 成人源提取完成，共 {len(adult_channels)} 个成人频道，生成 au.m3u 并更新 summary.m3u")
+print(f"✅ classify.py 执行完成，summary、4K、分类文件生成，自备源置顶，成人源分离完成")
