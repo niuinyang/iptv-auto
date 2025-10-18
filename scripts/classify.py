@@ -120,7 +120,6 @@ province_channels = {
     "福建东南卫视": ["东南卫视", "FJTV"]
 }
 
-# 自动 name_map
 if os.path.exists(name_map_file):
     with open(name_map_file, "r", encoding="utf-8") as f:
         auto_name_map_dict = json.load(f)
@@ -170,7 +169,7 @@ lines = open(input_file, encoding="utf-8").read().splitlines() if os.path.exists
 working_pairs = parse_pairs(lines, False, "other")
 merged = multicast_pairs + http_pairs + working_pairs
 
-# ------------------- 构建频道表 -------------------
+# ------------------- 构建频道表（严格组播置顶） -------------------
 channel_map = {c: defaultdict(list) for c in categories}
 channel_map["其他"] = defaultdict(list)
 custom_channels = set()
@@ -190,19 +189,18 @@ for title, url, is_custom, source_type in merged:
                 cat = c
                 break
 
-    # 排序关键：自备组播 > 自备http > 其他
+    lst = channel_map[cat][std_name]
     if is_custom:
-        if source_type=="multicast":
-            channel_map[cat][std_name].insert(0, url)
-        elif source_type=="http":
-            # 插入在普通源之前
-            idx = next((i for i,v in enumerate(channel_map[cat][std_name]) if v not in [url]), len(channel_map[cat][std_name]))
-            channel_map[cat][std_name].insert(idx, url)
         custom_channels.add(std_name)
+        if source_type=="multicast":
+            lst.insert(0, url)  # 自备组播最前
+        elif source_type=="http":
+            idx = next((i for i,v in enumerate(lst) if not v.startswith("http://"+new_gateway)), len(lst))
+            lst.insert(idx, url)
     else:
-        channel_map[cat][std_name].append(url)
+        lst.append(url)  # 其他源最后
 
-# ------------------- 输出 -------------------
+# ------------------- 输出 summary & 分类文件 -------------------
 summary_lines = ["#EXTM3U"]
 for cat in category_order:
     keys = list(channel_map[cat].keys())
@@ -210,7 +208,6 @@ for cat in category_order:
         keys.sort(key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
     else:
         keys.sort()
-    # summary中自备源置顶的逻辑已在channel_map里处理
 
     path = os.path.join(output_dir, f"{cat}.m3u")
     with open(path, "w", encoding="utf-8") as f:
@@ -224,8 +221,37 @@ for cat in category_order:
                 summary_lines.append(line)
                 summary_lines.append(u)
 
-with open(os.path.join(output_dir,"summary.m3u"),"w",encoding="utf-8") as f:
-    f.write("\n".join(summary_lines))
+# ------------------- 成人黑名单检测 -------------------
+adult_domains = [
+    "baddiehub.com",
+    "porn",
+    "xvideos",
+    "xnxx",
+    "adult",
+    "sex"
+]
+
+adult_channels = []
+clean_summary = []
+
+for i in range(0, len(summary_lines), 2):
+    line_extinf = summary_lines[i]
+    line_url = summary_lines[i+1]
+    if any(domain.lower() in line_url.lower() for domain in adult_domains):
+        adult_channels.append((line_extinf, line_url))
+    else:
+        clean_summary.append(line_extinf)
+        clean_summary.append(line_url)
+
+# 写入 au.m3u
+with open(os.path.join(output_dir, "au.m3u"), "w", encoding="utf-8") as f:
+    f.write("#EXTM3U\n")
+    for extinf, url in adult_channels:
+        f.write(extinf + "\n" + url + "\n")
+
+# 覆盖 summary.m3u，删除成人源
+with open(os.path.join(output_dir,"summary.m3u"), "w", encoding="utf-8") as f:
+    f.write("\n".join(clean_summary))
 
 # ------------------- 自动更新 name_map_auto.json -------------------
 if unmapped:
@@ -235,4 +261,5 @@ if unmapped:
         json.dump(auto_name_map_dict, f, ensure_ascii=False, indent=2)
     print(f"📝 更新自动 name_map 文件: {name_map_file}, 新增 {len(unmapped)} 个未匹配频道")
 
-print("✅ classify.py 执行完成：频道分类、排序、源优先级及 summary 输出完成。")
+print(f"✅ classify.py 执行完成：频道分类、排序、组播置顶、自备源优先、summary 输出完成")
+print(f"✅ 成人源提取完成，共 {len(adult_channels)} 个成人频道，生成 au.m3u 并更新 summary.m3u")
