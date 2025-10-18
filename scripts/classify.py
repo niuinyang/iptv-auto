@@ -60,17 +60,17 @@ def make_multicast_local(lines):
     open(custom_multicast_file, "w", encoding="utf-8").write("\n".join(out))
     return out
 
-def parse_pairs(lines, is_custom=False):
+def parse_pairs(lines, is_custom=False, source_type="other"):
     pairs = []
     for i in range(0, len(lines)-1):
         if lines[i].startswith("#EXTINF"):
             ext, url = lines[i].strip(), lines[i+1].strip()
             title = sanitize_title(ext)
-            pairs.append((title, url, is_custom))
+            pairs.append((title, url, is_custom, source_type))
     return pairs
 
-multicast_pairs = parse_pairs(make_multicast_local(fetch_lines(custom_multicast_url)), True)
-http_pairs = parse_pairs(fetch_lines(custom_http_url), True)
+multicast_pairs = parse_pairs(make_multicast_local(fetch_lines(custom_multicast_url)), True, "multicast")
+http_pairs = parse_pairs(fetch_lines(custom_http_url), True, "http")
 
 # ------------------- 分类关键字 -------------------
 categories = {
@@ -79,11 +79,13 @@ categories = {
     "地方": ["山东","江苏","浙江","广东","北京","上海","天津","湖南","重庆","四川","湖北","陕西","福建"],
     "港台": ["香港","TVB","台湾","台视","中视","翡翠"], 
     "国际": ["BBC","CNN","NHK"], 
-    "网络直播": ["斗鱼","虎牙","Bilibili"],
+    "网络频道": ["斗鱼","虎牙","Bilibili"],
     "4K频道": []
 }
-category_order = ["4K频道","央视","卫视","地方","港台","国际","网络直播","其他"]
-cctv_order = ["CCTV-1综合","CCTV-2财经","CCTV-3娱乐","CCTV-4中文国际","CCTV-5体育","CCTV-6电影","CCTV-7国防军事","CCTV-8电视剧","CCTV-9纪录","CCTV-10科教","CCTV-11戏曲","CCTV-12社会与法","CCTV-13新闻","CCTV-14少儿","CCTV-15音乐"]
+category_order = ["央视","卫视","地方","港台","国际","网络频道","4K频道","其他"]
+cctv_order = ["CCTV-1综合","CCTV-2财经","CCTV-3娱乐","CCTV-4中文国际","CCTV-5体育","CCTV-6电影",
+              "CCTV-7国防军事","CCTV-8电视剧","CCTV-9纪录","CCTV-10科教","CCTV-11戏曲",
+              "CCTV-12社会与法","CCTV-13新闻","CCTV-14少儿","CCTV-15音乐"]
 
 group_title_map = {
     "央视": "央视频道",
@@ -91,7 +93,7 @@ group_title_map = {
     "地方": "地方频道",
     "港台": "港台频道",
     "国际": "国际频道",
-    "网络直播": "网络频道",
+    "网络频道": "网络频道",
     "4K频道": "4K频道",
     "其他": "其他频道"
 }
@@ -118,7 +120,7 @@ province_channels = {
     "福建东南卫视": ["东南卫视", "FJTV"]
 }
 
-# 加载自动映射
+# 自动 name_map
 if os.path.exists(name_map_file):
     with open(name_map_file, "r", encoding="utf-8") as f:
         auto_name_map_dict = json.load(f)
@@ -165,15 +167,15 @@ def smart_name_map(title):
 
 # ------------------- 合并所有源 -------------------
 lines = open(input_file, encoding="utf-8").read().splitlines() if os.path.exists(input_file) else []
-working_pairs = parse_pairs(lines, False)
-merged = multicast_pairs + http_pairs + working_pairs  # 自备源在前
+working_pairs = parse_pairs(lines, False, "other")
+merged = multicast_pairs + http_pairs + working_pairs
 
 # ------------------- 构建频道表 -------------------
 channel_map = {c: defaultdict(list) for c in categories}
 channel_map["其他"] = defaultdict(list)
 custom_channels = set()
 
-for title, url, is_custom in merged:
+for title, url, is_custom, source_type in merged:
     std_name = smart_name_map(title)
     std_name = std_name or "unknown"
     is_4k = bool(re.search(r'4K', title, re.I))
@@ -188,36 +190,42 @@ for title, url, is_custom in merged:
                 cat = c
                 break
 
-    if url not in channel_map[cat][std_name]:
-        if is_custom:
+    # 排序关键：自备组播 > 自备http > 其他
+    if is_custom:
+        if source_type=="multicast":
             channel_map[cat][std_name].insert(0, url)
-            custom_channels.add(std_name)
-        else:
-            channel_map[cat][std_name].append(url)
+        elif source_type=="http":
+            # 插入在普通源之前
+            idx = next((i for i,v in enumerate(channel_map[cat][std_name]) if v not in [url]), len(channel_map[cat][std_name]))
+            channel_map[cat][std_name].insert(idx, url)
+        custom_channels.add(std_name)
+    else:
+        channel_map[cat][std_name].append(url)
 
 # ------------------- 输出 -------------------
-summary = ["#EXTM3U"]
+summary_lines = ["#EXTM3U"]
 for cat in category_order:
     keys = list(channel_map[cat].keys())
     if cat == "央视":
         keys.sort(key=lambda x: cctv_order.index(x) if x in cctv_order else 999)
     else:
         keys.sort()
-    keys.sort(key=lambda x: 0 if x in custom_channels else 1)
+    # summary中自备源置顶的逻辑已在channel_map里处理
 
     path = os.path.join(output_dir, f"{cat}.m3u")
     with open(path, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
         for k in keys:
             logo = build_logo_url(k)
+            group_title = group_title_map.get(cat, cat)
             for u in channel_map[cat][k]:
-                group_title = "4K频道" if cat=="4K频道" else group_title_map.get(cat, cat)
                 line = f'#EXTINF:-1 tvg-name="{k}" tvg-logo="{logo}" group-title="{group_title}",{k}'
                 f.write(line + "\n" + u + "\n")
-                summary.append(line)
-                summary.append(u)
+                summary_lines.append(line)
+                summary_lines.append(u)
 
-open(os.path.join(output_dir,"summary.m3u"),"w",encoding="utf-8").write("\n".join(summary))
+with open(os.path.join(output_dir,"summary.m3u"),"w",encoding="utf-8") as f:
+    f.write("\n".join(summary_lines))
 
 # ------------------- 自动更新 name_map_auto.json -------------------
 if unmapped:
@@ -227,4 +235,4 @@ if unmapped:
         json.dump(auto_name_map_dict, f, ensure_ascii=False, indent=2)
     print(f"📝 更新自动 name_map 文件: {name_map_file}, 新增 {len(unmapped)} 个未匹配频道")
 
-print("✅ classify.py 执行完成：台标正确，自备源置顶，智能匹配频道名，生成 4K 分组，并优化分组名称。")
+print("✅ classify.py 执行完成：频道分类、排序、源优先级及 summary 输出完成。")
